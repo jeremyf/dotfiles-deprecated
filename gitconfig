@@ -27,10 +27,15 @@
   autosetupmerge = true
 [alias]
   # http://ndlib.github.io/practices/make-git-forget-things/
+  ban = branch --verbose --all --no-merged
+  bam = branch --verbose --all --merged
+  pub = "!sh -c 'git push && hub browse'"
+  sha-head = log --pretty=format:'%H' -1
   author-count = "! sh -c 'git shortlog -se | sort -r'"
   forget = update-index --assume-unchanged
-  prune-branches = "! sh -c 'git checkout master && git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d'"
   remember = update-index --no-assume-unchanged
+  branch-list = "!sh -c 'git-branch-list.sh'"
+  prune-branches = "! sh -c 'git checkout master && git remote prune origin && git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d'"
   ci = commit -v -a
   st = status
   reset-hard = reset --hard HEAD
