@@ -1,0 +1,71 @@
+[log]
+  date = local
+[user]
+	name = Jeremy Friesen
+  email = jeremy.n.friesen@gmail.com
+  logallrefupdates=true
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+[color "branch"]
+  current = red reverse
+  local = red bold
+  remote = yellow
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = magenta
+[apply]
+  ignorewhitespace = change
+[branch]
+  autosetupmerge = true
+[alias]
+  # http://ndlib.github.io/practices/make-git-forget-things/
+  author-count = "! sh -c 'git shortlog -se | sort -r'"
+  forget = update-index --assume-unchanged
+  prune-branches = "! sh -c 'git checkout master && git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d'"
+  remember = update-index --no-assume-unchanged
+  ci = commit -v -a
+  st = status
+  reset-hard = reset --hard HEAD
+  undo = reset --soft HEAD
+  ba = branch -a -vv
+  co = checkout
+  branch-current = rev-parse --symbolic-full-name --abbrev-ref HEAD
+  number-of-commits-since-master = "! sh -c 'git log master..`git branch-current` --oneline | wc -l | tr -d \" \"'"
+  squash = "! sh -c 'git rebase --interactive HEAD~`git number-of-commits-since-master`'"
+  tag-release = "! sh -c 'git tag `date \"+RELEASE-%Y-%m-%d-%H-%M-%S\"`'"
+  release = "! sh -c 'git push origin master:release; git tag-release'"
+  repull = "! sh -c 'git stash && git pull --rebase'"
+  sync = "! sh -c 'git repull && git push'"
+  sync-pop = "! sh -c 'git sync && git stash pop'"
+  sp = "! sh -c 'git sync && git stash pop'"
+  plog = log --pretty=format:'%h\t%Cblue%cr%Creset\t%cn\t%Cgreen%s%Creset'
+  unmerged-edit = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; subl `f`"
+  edit = "! sh -c 'git status --porcelain | sed \"s/^...//\" | xargs subl'"
+  unmerged-add = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+  unstage = reset HEAD --
+  lg = log --graph --pretty=format:'%C(red)%h%Creset — %Creset%s %C(blue)%an, %C(green)(%ar)%Creset'
+[core]
+	excludesfile = /Users/jfriesen/.gitignore
+	autocrlf = input
+[gui]
+  spellingdictionary = none
+  diffcontext = 7
+  fontui = -family Mensch -size 13 -weight normal -slant roman -underline 0 -overstrike 0
+[url "git@github.com:jeremyf/"]
+  insteadOf = "git://github.com/jeremyf/"
+[merge]
+  summary = true
+[push]
+	default = current
+[credential]
+	helper = osxkeychain
+[github]
+	user = jeremyf
